@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <!--app:actionProviderClass="android.support.v7.widget.ShareActionProvider"-->
+
+    <item
+    android:title="Location"
+    android:id="@+id/option_location"
+    android:icon="@drawable/item_selector"
+        app:showAsAction="never"/>
+    <item
+        android:title="Settings"
+        android:id="@+id/option_setting"
+        android:icon="@drawable/item_selector"
+        app:showAsAction="never"/>
+</menu>

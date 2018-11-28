@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_selector"
+    android:orientation="horizontal"
+    android:padding="20sp"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+
+    >
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_gravity="start"
+        />
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/day_info"
+            android:textSize="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tomorrow"/>
+        <TextView
+            android:id="@+id/status"
+            android:textSize="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clouds"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tmp_max"
+            android:textSize="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="27°"/>
+        <TextView
+            android:id="@+id/tmp_min"
+            android:textSize="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16°"/>
+    </LinearLayout>
+</LinearLayout>
