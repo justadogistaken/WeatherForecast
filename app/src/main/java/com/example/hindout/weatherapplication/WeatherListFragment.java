@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.hindout.weatherapplication.model.WeatherModel;
@@ -42,21 +43,22 @@ public class WeatherListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         repository = WeatherRepository.get();
         //避免退出后再进全空白
-        if(repository.getWeatherList().size()>0){
-            weatherList.clear();
-            weatherList.addAll(repository.getWeatherList());
-            updateUI();
-        }else{
+//        if(repository.getWeatherList().size()>0){
+//            weatherList.clear();
+//            weatherList.addAll(repository.getWeatherList());
+//            updateUI();
+//        }else{
             repository.setDownload(new WeatherRepository.DoneDownload() {
                 @Override
-                public void getData(ArrayList<WeatherModel> arrayList) {
-                    weatherList.clear();
-                    weatherList.addAll(arrayList);
-                    updateUI();
-                    Log.i("old","old");
+                public void getData(ArrayList<WeatherModel> arrayList, int resultCode) {
+                    if(resultCode == DownloadWeatherForecast.SUCCESS){
+                        weatherList.clear();
+                        weatherList.addAll(arrayList);
+                        updateUI();
+                    }
                 }
             });
-        }
+//        }
 
         RefreshLayout refreshLayout = getActivity().findViewById(R.id.refresh_layout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -66,10 +68,15 @@ public class WeatherListFragment extends Fragment {
                 map.put("location","长沙");
                 repository.setDownload(new WeatherRepository.DoneDownload() {
                     @Override
-                    public void getData(ArrayList<WeatherModel> arrayList) {
-                        weatherList.clear();
-                        weatherList.addAll(arrayList);
-                        updateUI();
+                    public void getData(ArrayList<WeatherModel> arrayList, int resultCode) {
+                        if(resultCode == DownloadWeatherForecast.SUCCESS){
+                            weatherList.clear();
+                            weatherList.addAll(arrayList);
+                            updateUI();
+                        }else{
+                            Toast.makeText(getContext(), "获取更新数据失败",Toast.LENGTH_LONG)
+                                    .show();
+                        }
                         refreshLayout.finishRefresh();
                     }
                 });
@@ -173,5 +180,13 @@ public class WeatherListFragment extends Fragment {
         hum.setText("相对湿度:  "+weatherModel.getHum());
         TextView pre = (TextView) appCompatActivity.findViewById(R.id.weather_pres);
         pre.setText("大气压强:  "+weatherModel.getPressure());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        weatherList.clear();
+        weatherList.addAll(repository.getWeatherList());
+        updateUI();
     }
 }

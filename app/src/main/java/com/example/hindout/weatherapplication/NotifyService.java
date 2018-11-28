@@ -32,6 +32,7 @@ import java.util.Map;
 
 public class NotifyService extends Service{
     public static WeatherModel model;
+    private AsyncTask<Map<String,String>,Void,String> asyncTask;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -46,7 +47,7 @@ public class NotifyService extends Service{
     private void request(){
         Map<String,String> map = new HashMap<>();
         map.put("location",WeatherRepository.Location);
-        AsyncTask<Map<String,String>,Void,String> asyncTask
+        asyncTask
                 =new AsyncTask<Map<String, String>, Void, String>() {
             @Override
             protected String doInBackground(Map<String, String>[] maps) {
@@ -87,20 +88,21 @@ public class NotifyService extends Service{
         asyncTask.execute(map);
     }
 
-
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         request();
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//        int time = 10000;
-//        fresh.freshing();
-//        long triggerAtTime = SystemClock.elapsedRealtime()+time;
-//        Intent intent1 = new Intent(this, AlarmReceiver.class);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,intent1,0);
-//        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pendingIntent);
         return super.onStartCommand(intent, flags, startId);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(asyncTask != null){
+            asyncTask.cancel(true);
+        }
+        AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent1 = new Intent(NotifyService.this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(NotifyService.this,0,intent1,0);
+        alarmManager.cancel(pendingIntent);
+    }
 }

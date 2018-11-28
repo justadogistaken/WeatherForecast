@@ -74,66 +74,6 @@ public class Map_Activity extends AppCompatActivity {
         baiduMap.setMyLocationEnabled(true);
         initLocation();
         locationClient.start();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            // 检查该权限是否已经获取
-//            // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
-//
-//            // sd卡权限
-//            String[] SdCardPermission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-//            if (ContextCompat.checkSelfPermission(this, SdCardPermission[0]) != PackageManager.PERMISSION_GRANTED) {
-//                // 如果没有授予该权限，就去提示用户请求
-//                ActivityCompat.requestPermissions(this, SdCardPermission, 100);
-//            }
-//
-//            //手机状态权限
-//            String[] readPhoneStatePermission = {Manifest.permission.READ_PHONE_STATE};
-//            if (ContextCompat.checkSelfPermission(this, readPhoneStatePermission[0]) != PackageManager.PERMISSION_GRANTED) {
-//                // 如果没有授予该权限，就去提示用户请求
-//                ActivityCompat.requestPermissions(this, readPhoneStatePermission, 200);
-//            }
-//
-//            //定位权限
-//            String[] locationPermission = {Manifest.permission.ACCESS_FINE_LOCATION};
-//            if (ContextCompat.checkSelfPermission(this, locationPermission[0]) != PackageManager.PERMISSION_GRANTED) {
-//                // 如果没有授予该权限，就去提示用户请求
-//                ActivityCompat.requestPermissions(this, locationPermission, 300);
-//            }
-//
-//            String[] ACCESS_COARSE_LOCATION = {Manifest.permission.ACCESS_COARSE_LOCATION};
-//            if (ContextCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION[0]) != PackageManager.PERMISSION_GRANTED) {
-//                // 如果没有授予该权限，就去提示用户请求
-//                ActivityCompat.requestPermissions(this, ACCESS_COARSE_LOCATION, 400);
-//            }
-//
-//
-//            String[] READ_EXTERNAL_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE};
-//            if (ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE[0]) != PackageManager.PERMISSION_GRANTED) {
-//                // 如果没有授予该权限，就去提示用户请求
-//                ActivityCompat.requestPermissions(this, READ_EXTERNAL_STORAGE, 500);
-//            }
-//
-//            String[] WRITE_EXTERNAL_STORAGE = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-//            if (ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE[0]) != PackageManager.PERMISSION_GRANTED) {
-//                // 如果没有授予该权限，就去提示用户请求
-//                ActivityCompat.requestPermissions(this, WRITE_EXTERNAL_STORAGE, 600);
-//            }
-//
-//        }else{
-//            //doSdCardResult();
-//        }
-
-
-//        BDLocation location = new BDLocation();
-//        MyLocationData.Builder builder = new MyLocationData.Builder();
-//        builder.latitude(location.getLatitude());
-//        builder.longitude(location.getLongitude());
-//        MyLocationData locationData = builder.build();
-
-
-
-            // 设置定位数据
-
-
     }
 
     private void initLocation() {

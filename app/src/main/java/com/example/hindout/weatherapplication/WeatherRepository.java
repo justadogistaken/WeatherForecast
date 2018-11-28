@@ -37,6 +37,7 @@ public class WeatherRepository {
 
     private WeatherRepository(){
         weatherModelArrayList = new ArrayList<>();
+        weatherModelArrayList = DBHelper.readData();
         Map<String, String> map = new HashMap<>();
         map.put("location",Location);
         startDownloadTask(map);
@@ -62,24 +63,29 @@ public class WeatherRepository {
                     MainWindow.database.execSQL("DELETE FROM WEATHER");
                     weatherModelArrayList = gson.fromJson(jsonArray.toString(), new TypeToken<List<WeatherModel>>(){}.getType());
                     weatherModelArrayList = specialOperation(weatherModelArrayList);
-                    download.getData(weatherModelArrayList);
+                    download.getData(weatherModelArrayList,
+                            DownloadWeatherForecast.SUCCESS);
                 }
                 else{
-//                    weatherModelArrayList = specialOperation(DBHelper.readData());
-                    weatherModelArrayList = DBHelper.readData();
-                    download.getData(weatherModelArrayList);
+                    download.getData(null,
+                            DownloadWeatherForecast.FAILED);
                 }
             }
         });
         downloadWeatherForecast.execute(map);
     }
 
+    /**
+     *  用来数据特殊处理化，主要为了展示
+     * @param arrayList
+     * @return
+     * @throws Exception
+     */
     private ArrayList<WeatherModel> specialOperation(ArrayList<WeatherModel> arrayList) throws Exception{
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd");
 
         for(int i = 0; i < arrayList.size(); i++){
-
             WeatherModel model = arrayList.get(i);
             model.setDetail_date(model.getDate());
             model.setLocation(WeatherRepository.Location);
@@ -99,13 +105,14 @@ public class WeatherRepository {
                 model.setDate("明天");
             }
         }
-        return arrayList;
+        if(weatherModelArrayList.size() == 0)
+            return arrayList;
+        return  weatherModelArrayList;
     }
 
-    public void setDownload(DoneDownload download) {
-        this.download = download;
-    }
-
+    /*
+    静态仓库对象
+     */
     public static WeatherRepository get(){
         if(mWeatherRepository == null){
             mWeatherRepository = new WeatherRepository();
@@ -113,6 +120,9 @@ public class WeatherRepository {
         return mWeatherRepository;
     }
 
+    /*
+    返回数据列表
+     */
     public ArrayList<WeatherModel> getWeatherList(){
         return weatherModelArrayList;
     }
@@ -120,14 +130,21 @@ public class WeatherRepository {
     /**
      * 数据下载好后，返回给需要的UI线程
      */
-
     public interface DoneDownload{
-        void getData(ArrayList<WeatherModel> arrayList);
+        void getData(ArrayList<WeatherModel> arrayList, int resultCode);
+    }
+    /*
+    设置监听器，将数据传送给需要的UI
+     */
+    public void setDownload(DoneDownload download) {
+        this.download = download;
     }
 }
 
+/*
+日期映射表
+ */
 class DateTable{
     public static String[] weekday = {"星期日","星期一","星期二","星期三","星期四","星期五","星期六"};
     public static String[] month = {"一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"};
-
 }

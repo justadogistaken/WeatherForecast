@@ -24,6 +24,8 @@ import java.util.Map;
 
 public class DownloadWeatherForecast extends AsyncTask<Map<String, String>,Void,String> {
     private callBack call;
+    public static final int SUCCESS = 200;
+    public static final int FAILED = 500;
     @Override
     protected String doInBackground(Map<String, String>[] maps) {
         try {

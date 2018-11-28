@@ -9,12 +9,6 @@ import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.example.hindout.weatherapplication.model.WeatherModel;
-
-import javax.security.auth.login.LoginException;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
-
 /**
  * Created by hindout on 2018/11/26.
  */
@@ -26,8 +20,11 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         try{
-            NotificationOperation notificationOperation = new NotificationOperation(context.getApplicationContext());
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context.getApplicationContext(), NotificationOperation.ANDROID_CHANNEL_ID);
+            NotificationOperation notificationOperation =
+                    new NotificationOperation(context.getApplicationContext());
+            NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(context
+                    , NotificationOperation.ANDROID_CHANNEL_ID);
             builder.setContentTitle("天气预报")//设置通知栏标题
                                     .setContentText("当前温度为：" + NotifyService.model.getTmp()
                                             + "天气状况为：" + NotifyService.model.getCond_txt())
